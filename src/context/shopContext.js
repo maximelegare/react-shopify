@@ -18,6 +18,7 @@ class ShopProvider extends Component {
         isMenuOpen:false
     }
 
+
     componentDidMount(){
         const checkoutId = localStorage.checkout_id
         if(checkoutId){
@@ -44,7 +45,7 @@ class ShopProvider extends Component {
 
     fetchAllProducts = async () => {
         const products = await client.product.fetchAll()
-        this.setState({...this.state, products})
+        this.setState({products})
         
     }
 
@@ -62,7 +63,17 @@ class ShopProvider extends Component {
 
     render() {
         return (
-            <ShopContext.Provider value={this.state}>
+            <ShopContext.Provider value={{
+                ...this.state,
+                fetchAllProducts:this.fetchAllProducts,
+                addItemToCheckout:this.addItemToCheckout,
+                removeLineItem:this.removeLineItem,
+                fetchProductWithHandle:this.fetchProductWithHandle,
+                closeCart:this.closeCart,
+                openCart:this.openCart,
+                closeMenu:this.closeMenu,
+                openMenu:this.openMenu,
+             }}>
                 {this.props.children}
             </ShopContext.Provider>
         );
